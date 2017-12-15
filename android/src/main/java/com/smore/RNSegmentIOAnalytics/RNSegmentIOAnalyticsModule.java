@@ -32,6 +32,18 @@ public class RNSegmentIOAnalyticsModule extends ReactContextBaseJavaModule {
   public RNSegmentIOAnalyticsModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
+  
+  public static void configure(Context context, String writeKey, Integer flushAt) {
+    if (mAnalytics == null) {
+      Builder builder = new Analytics.Builder(context, writeKey);
+      builder.flushQueueSize(flushAt);
+      builder.trackApplicationLifecycleEvents();
+
+      mAnalytics = builder.build();
+    } else {
+      return;
+    }
+  }
 
   /*
    https://segment.com/docs/libraries/android/#identify
